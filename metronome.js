@@ -58,10 +58,15 @@ o.extend(Metronome.prototype, {
 
   config: function config(configFile) {
     var _this = this;
-    require(configFile).forEach(function (config) {
-      _this.register(config, path.dirname(configFile));
+    _this._enqueue(function (callback) {
+      require(configFile).forEach(function (config) {
+        _this._register(config, path.dirname(configFile), function (err) {
+          if (err) return _this.emit('err', err);
+          callback();
+        });
+      });
+      return this;
     });
-    return this;
   },
 
 
@@ -261,7 +266,7 @@ o.extend(Metronome.prototype, {
    * Enqueue arbitraity function.
    */
 
-  then: function(fn) {
+  then: function then(fn) {
     var _this = this;
     _this._enqueue(function (callback) {
       if (fn.length) {
