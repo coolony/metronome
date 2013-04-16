@@ -183,7 +183,8 @@ o.extend(Metronome.prototype, {
         var config = packageData.config;
         packageData.setup(config, _this._services, function (err, services) {
           if (err) return done(err);
-          o.each(packageData.provides || {}, function (service) {
+          services = services || {};
+          o.each(packageData.provides, function (service) {
             _this._services[service] = services[service] || {};
           });
           done();
