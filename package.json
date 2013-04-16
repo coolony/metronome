@@ -1,9 +1,12 @@
 {
   "name": "metronome",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Fully async modular application framework for Node.js.",
   "main": "metronome.js",
-  "repository": "",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/coolony/metronome.git"
+  }
   "author": "Pierre Matri <pierre@coolony.com>",
   "license": "BSD",
   "dependencies": {
