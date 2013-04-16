@@ -332,9 +332,8 @@ o.extend(Metronome.prototype, {
         _this._busy = false;
       }
       else {
-        var next = _this._queue.shift();
         process.nextTick(function () {
-          next(callNext);
+          (_this._queue.shift())(callNext);
         });
       }
     }
@@ -396,9 +395,7 @@ function resolvePackage(packagePath, base, callback) {
     }
   }
 
-  o.detect(tryPaths, isPackagePath, function (resolvedPath) {
-    return callback(resolvedPath);
-  });
+  o.detect(tryPaths, isPackagePath, callback);
 }
 
 function isPackagePath(packagePath, callback) {
