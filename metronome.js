@@ -130,10 +130,12 @@ o.extend(Metronome.prototype, {
     _this._enqueue(function (callback) {
 
       // Prepare process.
-      var remaining = Object.keys(_this._packages);
+      var remaining = [];
       var done = [];
       var reverse = {};
       o.each(_this._packages, function (data, name) {
+        if (data.config.enabled === false) return;
+        remaining.push(name);
         o.each(data.provides, function (service) {
           reverse[service] = name;
         });
