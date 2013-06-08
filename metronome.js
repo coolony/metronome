@@ -43,7 +43,6 @@ o.extend(Metronome.prototype, {
    */
 
   register: function register(config, base) {
-    if (data.config.enabled === false) return this;
     this._enqueue(function (callback) {
       this._register(config, base, function (err) {
         if (err) return _this.emit('err', err);
@@ -300,6 +299,7 @@ o.extend(Metronome.prototype, {
   _register: function _register(config, root, callback) {
     var _this = this;
     config = typeof config === 'string' ? { packagePath: config } : config;
+    if (config.enabled === false) return callback();
     resolvePackage(config.packagePath, root, function (packagePath) {
       if (!packagePath) {
         return callback(Error([
