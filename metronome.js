@@ -43,12 +43,14 @@ o.extend(Metronome.prototype, {
    */
 
   register: function register(config, base) {
+    if (data.config.enabled === false) return this;
     this._enqueue(function (callback) {
       this._register(config, base, function (err) {
         if (err) return _this.emit('err', err);
         callback();
       });
     });
+    return this;
   },
 
 
@@ -65,8 +67,8 @@ o.extend(Metronome.prototype, {
           callback();
         });
       });
-      return this;
     });
+    return this;
   },
 
 
@@ -134,7 +136,6 @@ o.extend(Metronome.prototype, {
       var done = [];
       var reverse = {};
       o.each(_this._packages, function (data, name) {
-        if (data.config.enabled === false) return;
         remaining.push(name);
         o.each(data.provides, function (service) {
           reverse[service] = name;
